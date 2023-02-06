@@ -19,7 +19,7 @@ const tasksService = {
       formData.due_date
     )}&comments=${encodeURIComponent(
       formData.comments
-    )}=&description=${encodeURIComponent(
+    )}&description=${encodeURIComponent(
       formData.description
     )}&tags=${encodeURIComponent(formData.tags)}&token=${encodeURIComponent(
       formData.token

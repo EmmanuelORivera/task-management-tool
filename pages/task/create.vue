@@ -12,7 +12,6 @@ const task = ref([
   },
 ])
 
-console.log(task.value[0])
 const serviceCallack = async () => {
   await tasksService.createTask(task)
 }

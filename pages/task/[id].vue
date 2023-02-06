@@ -6,7 +6,6 @@ const data = await tasksService.fetchSingleTask(route.params.id)
 const task = reactive(data)
 
 const serviceCallback = async () => {
-  console.log('ENTRA')
   await tasksService.updateSingleTask(route.params.id, task)
 }
 </script>

@@ -1,4 +1,5 @@
 <script setup>
+const router = useRouter()
 const { task, serviceCallback } = defineProps(['task', 'serviceCallback'])
 
 const titleRules = reactive([
@@ -10,7 +11,7 @@ const titleRules = reactive([
 
 const submit = async () => {
   await serviceCallback()
-  alert('Submit was successful')
+  router.push({ path: `/` })
 }
 </script>
 <template>

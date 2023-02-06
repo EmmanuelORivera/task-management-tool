@@ -1,14 +1,19 @@
 <script setup>
-const props = defineProps(['test'])
+import tasksService from '../services/Tasks'
+
+const props = defineProps(['test', 'taskToBeDeleted'])
 const showDialog = ref(props.test)
-const emits = defineEmits(['changeShowDialog'])
+const emits = defineEmits(['changeShowDialog', 'deleteTask'])
 
 const closeModal = () => {
   showDialog.value = false
   emits('changeShowDialog', showDialog)
 }
 
-const deleteTask = () => {
+const deleteTask = async () => {
+  await tasksService.deleteTask(props.taskToBeDeleted.id)
+
+  emits('deleteTask', props.taskToBeDeleted.id)
   closeModal()
 }
 
@@ -26,7 +31,9 @@ watch(
     class="d-flex justify-center align-center"
   >
     <v-card class="pa-4">
-      <v-card-title> Delete Task </v-card-title>
+      <v-card-title class="text-capitalize">
+        Delete task: {{ props.taskToBeDeleted.title }}</v-card-title
+      >
       <v-card-text class="text-subtitle-1 text-center"
         >This task will be permanently deleted.
       </v-card-text>

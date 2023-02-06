@@ -14,16 +14,25 @@ const { data } = await useFetch(
     },
   }
 )
+const taskToBeDeleted = ref(null)
 const showDialog = ref(false)
 const originalTasks = reactive(data)
 const tasksCopy = ref(originalTasks.value)
 
-const handleDeleteButton = () => {
+const handleDeleteButton = (task) => {
+  taskToBeDeleted.value = { id: task.id, title: task.title }
   showDialog.value = true
 }
 
 const handleChangeShowDialog = (e) => {
   showDialog.value = e.value
+}
+
+const removeTaskFromList = (id) => {
+  tasksCopy.value = tasksCopy.value.filter((singleTask) => singleTask.id !== id)
+  originalTasks.value = originalTasks.value.filter(
+    (singleTask) => singleTask.id !== id
+  )
 }
 
 const lengthShowedTasks = computed(() => {
@@ -145,7 +154,7 @@ watch(
               variant="outlined"
               icon
               color="error"
-              @click="handleDeleteButton"
+              @click="handleDeleteButton(task)"
               v-bind="props"
             >
               <v-icon>mdi-delete-alert</v-icon>
@@ -175,7 +184,12 @@ watch(
       </v-alert>
     </TransitionGroup>
 
-    <Modal :test="showDialog" @change-show-dialog="handleChangeShowDialog" />
+    <Modal
+      :test="showDialog"
+      :task-to-be-deleted="taskToBeDeleted"
+      @change-show-dialog="handleChangeShowDialog"
+      @delete-task="removeTaskFromList"
+    />
   </div>
 </template>
 

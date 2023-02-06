@@ -3,7 +3,7 @@
     <Header />
     <v-main>
       <v-container>
-        <Task />
+        <NuxtPage />
       </v-container>
     </v-main>
   </v-app>

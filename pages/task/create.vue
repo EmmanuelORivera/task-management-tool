@@ -17,5 +17,6 @@ const serviceCallack = async () => {
 }
 </script>
 <template>
+  <h2 class="text-center">Create Task</h2>
   <Form :task="task" :serviceCallback="serviceCallack" />
 </template>

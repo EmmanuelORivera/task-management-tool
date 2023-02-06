@@ -129,67 +129,71 @@ watch(
 </script>
 <template>
   <div>
-    <TransitionGroup name="list">
-      <v-alert
-        v-for="(task, index) in tasksCopy"
-        :key="task.id"
-        border="start"
-        :border-color="getTaskColor(task.is_completed)"
-        class="mt-4 test"
-      >
-        <div class="d-flex align-center">
-          <div>
-            <v-alert-title class="text-subtitle-1 text-capitalize">
-              <strong>Title:</strong> {{ task.title }}
-            </v-alert-title>
-            <p><strong> Due date: </strong>{{ task.due_date }}</p>
-            <p><strong> Status: </strong>{{ getStatus(task.is_completed) }}</p>
-          </div>
+    <ClientOnly>
+      <TransitionGroup name="list">
+        <v-alert
+          v-for="(task, index) in tasksCopy"
+          :key="task.id"
+          border="start"
+          :border-color="getTaskColor(task.is_completed)"
+          class="mt-4 test"
+        >
+          <div class="d-flex align-center">
+            <div>
+              <v-alert-title class="text-subtitle-1 text-capitalize">
+                <strong>Title:</strong> {{ task.title }}
+              </v-alert-title>
+              <p><strong> Due date: </strong>{{ task.due_date }}</p>
+              <p>
+                <strong> Status: </strong>{{ getStatus(task.is_completed) }}
+              </p>
+            </div>
 
-          <v-spacer></v-spacer>
-          <div>
+            <v-spacer></v-spacer>
+            <div>
+              <v-btn
+                size="35"
+                class="mr-3"
+                variant="outlined"
+                icon
+                color="error"
+                @click="handleDeleteButton(task)"
+                v-bind="props"
+              >
+                <v-icon>mdi-delete-alert</v-icon>
+              </v-btn>
+            </div>
+
             <v-btn
               size="35"
               class="mr-3"
               variant="outlined"
               icon
-              color="error"
-              @click="handleDeleteButton(task)"
-              v-bind="props"
+              color="deep-purple darken-3"
+              @click="router.push({ path: `/task/${task.id}` })"
             >
-              <v-icon>mdi-delete-alert</v-icon>
+              <v-icon>mdi-book-edit</v-icon>
+            </v-btn>
+            <v-btn
+              size="35"
+              variant="outlined"
+              icon
+              :color="getTaskColor(task.is_completed)"
+              @click="fetchSingleTask(task, index)"
+            >
+              <v-icon v-if="task.is_completed">mdi-check-circle</v-icon>
             </v-btn>
           </div>
+        </v-alert>
+      </TransitionGroup>
 
-          <v-btn
-            size="35"
-            class="mr-3"
-            variant="outlined"
-            icon
-            color="deep-purple darken-3"
-            @click="router.push({ path: `/task/${task.id}` })"
-          >
-            <v-icon>mdi-book-edit</v-icon>
-          </v-btn>
-          <v-btn
-            size="35"
-            variant="outlined"
-            icon
-            :color="getTaskColor(task.is_completed)"
-            @click="fetchSingleTask(task, index)"
-          >
-            <v-icon v-if="task.is_completed">mdi-check-circle</v-icon>
-          </v-btn>
-        </div>
-      </v-alert>
-    </TransitionGroup>
-
-    <Modal
-      :test="showDialog"
-      :task-to-be-deleted="taskToBeDeleted"
-      @change-show-dialog="handleChangeShowDialog"
-      @delete-task="removeTaskFromList"
-    />
+      <Modal
+        :test="showDialog"
+        :task-to-be-deleted="taskToBeDeleted"
+        @change-show-dialog="handleChangeShowDialog"
+        @delete-task="removeTaskFromList"
+      />
+    </ClientOnly>
   </div>
 </template>
 

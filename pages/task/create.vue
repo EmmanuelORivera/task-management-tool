@@ -17,7 +17,7 @@ const serviceCallack = async () => {
 }
 </script>
 <template>
-  <h2 class="text-center mb-4">
+  <h2 class="text-center">
     <v-icon color="deep-purple darken-3">mdi-receipt-text-plus-outline</v-icon>
     Create Task
   </h2>

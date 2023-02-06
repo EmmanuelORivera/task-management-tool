@@ -14,7 +14,7 @@ const submit = async () => {
 }
 </script>
 <template>
-  <form @submit.prevent="submit">
+  <form @submit.prevent="submit" class="mt-4">
     <v-text-field
       v-model="task[0].title"
       :rules="titleRules"

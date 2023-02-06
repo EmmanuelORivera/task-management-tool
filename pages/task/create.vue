@@ -17,6 +17,9 @@ const serviceCallack = async () => {
 }
 </script>
 <template>
-  <h2 class="text-center">Create Task</h2>
+  <h2 class="text-center mb-4">
+    <v-icon color="deep-purple darken-3">mdi-receipt-text-plus-outline</v-icon>
+    Create Task
+  </h2>
   <Form :task="task" :serviceCallback="serviceCallack" />
 </template>

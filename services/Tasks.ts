@@ -21,12 +21,12 @@ const tasksService = {
       formData.comments
     )}=&description=${encodeURIComponent(
       formData.description
-    )}&tags=${encodeURIComponent(formData.tags)}&token${encodeURIComponent(
+    )}&tags=${encodeURIComponent(formData.tags)}&token=${encodeURIComponent(
       formData.token
     )}`
 
     await useFetch(
-      `https://ecsdevapi.nextline.mx/vdev/tasks-challenge/${lastUrl}`,
+      `https://ecsdevapi.nextline.mx/vdev/tasks-challenge/tasks?${lastUrl}`,
       {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',

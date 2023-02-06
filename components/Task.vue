@@ -14,8 +14,17 @@ const { data } = await useFetch(
     },
   }
 )
+const showDialog = ref(false)
 const originalTasks = reactive(data)
 const tasksCopy = ref(originalTasks.value)
+
+const handleDeleteButton = () => {
+  showDialog.value = true
+}
+
+const handleChangeShowDialog = (e) => {
+  showDialog.value = e.value
+}
 
 const lengthShowedTasks = computed(() => {
   switch (props.filterOption) {
@@ -110,46 +119,64 @@ watch(
 )
 </script>
 <template>
-  <TransitionGroup name="list">
-    <v-alert
-      v-for="(task, index) in tasksCopy"
-      :key="task.id"
-      border="start"
-      :border-color="getTaskColor(task.is_completed)"
-      class="mt-4 test"
-    >
-      <div class="d-flex align-center">
-        <div>
-          <v-alert-title class="text-subtitle-1 text-capitalize">
-            <strong>Title:</strong> {{ task.title }}
-          </v-alert-title>
-          <p><strong> Due date: </strong>{{ task.due_date }}</p>
-          <p><strong> Status: </strong>{{ getStatus(task.is_completed) }}</p>
-        </div>
+  <div>
+    <TransitionGroup name="list">
+      <v-alert
+        v-for="(task, index) in tasksCopy"
+        :key="task.id"
+        border="start"
+        :border-color="getTaskColor(task.is_completed)"
+        class="mt-4 test"
+      >
+        <div class="d-flex align-center">
+          <div>
+            <v-alert-title class="text-subtitle-1 text-capitalize">
+              <strong>Title:</strong> {{ task.title }}
+            </v-alert-title>
+            <p><strong> Due date: </strong>{{ task.due_date }}</p>
+            <p><strong> Status: </strong>{{ getStatus(task.is_completed) }}</p>
+          </div>
 
-        <v-spacer></v-spacer>
-        <v-btn
-          size="40"
-          class="mr-4"
-          variant="outlined"
-          icon
-          color="deep-purple darken-3"
-          @click="router.push({ path: `/task/${task.id}` })"
-        >
-          <v-icon>mdi-book-edit</v-icon>
-        </v-btn>
-        <v-btn
-          size="40"
-          variant="outlined"
-          icon
-          :color="getTaskColor(task.is_completed)"
-          @click="fetchSingleTask(task, index)"
-        >
-          <v-icon v-if="task.is_completed">mdi-check-circle</v-icon>
-        </v-btn>
-      </div>
-    </v-alert>
-  </TransitionGroup>
+          <v-spacer></v-spacer>
+          <div>
+            <v-btn
+              size="35"
+              class="mr-3"
+              variant="outlined"
+              icon
+              color="error"
+              @click="handleDeleteButton"
+              v-bind="props"
+            >
+              <v-icon>mdi-delete-alert</v-icon>
+            </v-btn>
+          </div>
+
+          <v-btn
+            size="35"
+            class="mr-3"
+            variant="outlined"
+            icon
+            color="deep-purple darken-3"
+            @click="router.push({ path: `/task/${task.id}` })"
+          >
+            <v-icon>mdi-book-edit</v-icon>
+          </v-btn>
+          <v-btn
+            size="35"
+            variant="outlined"
+            icon
+            :color="getTaskColor(task.is_completed)"
+            @click="fetchSingleTask(task, index)"
+          >
+            <v-icon v-if="task.is_completed">mdi-check-circle</v-icon>
+          </v-btn>
+        </div>
+      </v-alert>
+    </TransitionGroup>
+
+    <Modal :test="showDialog" @change-show-dialog="handleChangeShowDialog" />
+  </div>
 </template>
 
 <style scoped>

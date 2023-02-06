@@ -1,20 +1,16 @@
-# Nuxt 3 Minimal Starter
-
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# App developed by using Nuxt3 and Vuetify3.
 
 ## Setup
 
 Make sure to install the dependencies:
 
 ```bash
-# yarn
-yarn install
+
 
 # npm
 npm install
 
-# pnpm
-pnpm install
+
 ```
 
 ## Development Server
